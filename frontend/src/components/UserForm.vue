@@ -1,8 +1,8 @@
 <template>
 
-  <div class="bg-green-200 min-h-screen flex justify-center items-center">
-    <div class="max-w-xl w-full bg-gray-900 rounded-lg p-8">
-      <form @submit.prevent="submitForm" class="space-y-4">
+  <div class="bg-green-200 min-h-screen flex justify-center items-center" style="background-image: url('src/assets/image.avif'); background-size: cover">
+    <div class="max-w-xl w-full bg-gray-500  rounded-lg p-8 opacity-90">
+      <form @submit.prevent="submitForm" class="space-y-4 opacity-70">
         <div>
           <label for="email" class="text-white block">Email:</label>
           <input type="email" id="email" v-model="form.email" required class="input-field">
