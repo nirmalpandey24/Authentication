@@ -99,7 +99,7 @@ class CustomUserDetail(View):
             hobbies=data.get('hobbies')
         )
         return JsonResponse({'message': 'User created'}, status=201)
-
+ 
 class LoginView(View):
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
@@ -120,25 +120,24 @@ class LoginView(View):
 
         access_token_payload = {
             'id': user.id,
-            'exp': datetime.datetime.now() + datetime.timedelta(minutes=1),  
-            'iat': datetime.datetime.now(),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),  
+            'iat': datetime.datetime.utcnow(),
             'user': user.email
         }
         access_token = jwt.encode(access_token_payload, 'secret', algorithm='HS384')
 
-       
         refresh_token_payload = {
             'id': user.id,
-            'exp': datetime.datetime.now() + datetime.timedelta(days=15), 
-            'iat': datetime.datetime.now(),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=15), 
+            'iat': datetime.datetime.utcnow(),
         }
         refresh_token = jwt.encode(refresh_token_payload, 'refresh_secret', algorithm='HS384')
 
-        
-        response = JsonResponse({'token': access_token, 'refresh_token': refresh_token})
-        response.set_cookie(key='jwt', value=access_token, httponly=True,samesite=None)
-        response.set_cookie(key='refresh_token', value=refresh_token, httponly=True,samesite=None)
+        user.access_token = access_token
+        user.refresh_token = refresh_token
+        user.save()
 
+        response = JsonResponse({'token': access_token, 'refresh_token': refresh_token})
         return response
     
 

@@ -52,7 +52,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware'
+    'django.middleware.common.CommonMiddleware',
+    
+   
 ]
 
 ROOT_URLCONF = 'hello_django.urls'
@@ -132,6 +134,7 @@ AUTH_USER_MODEL = "users.CustomUser"
  
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
+  
     # Add other allowed origins if needed
 ]
 REST_FRAMEWORK = {
@@ -140,5 +143,7 @@ REST_FRAMEWORK = {
     
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
-    
+  
 }
+CORS_ALLOW_CREDENTIALS = True 
+CORS_EXPOSE_HEADERS = ['Set-Cookie']
